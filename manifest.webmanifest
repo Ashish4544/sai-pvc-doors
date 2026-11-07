@@ -1,0 +1,14 @@
+{
+  "name": "Sai PVC Doors Billing",
+  "short_name": "Sai PVC Doors",
+  "description": "Offline billing and payment tracking for Sai PVC Doors",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf8f1",
+  "theme_color": "#4b3022",
+  "icons": [
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

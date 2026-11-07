@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4b3022">
+  <meta name="description" content="Simple offline billing for Sai PVC Doors">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/app-icon.png">
+  <link rel="apple-touch-icon" href="assets/app-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Sai PVC Doors Billing</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="assets/app-icon.png" alt="Sai PVC Doors"><div><strong>Sai PVC Doors</strong><small>Billing & Payments</small></div></div>
+    <button id="installBtn" class="install-btn" hidden>Install app</button>
+  </header>
+
+  <main class="wrap">
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" data-view="new">New bill</button>
+      <button class="tab" data-view="bills">Bills</button>
+      <button class="tab" data-view="pending">Pending</button>
+    </nav>
+
+    <section id="view-new" class="view">
+      <div class="section-heading"><div><h1>Create bill</h1><p>Enter door sizes in inches.</p></div><span class="pill">Offline ready</span></div>
+      <div class="card">
+        <div class="form-grid">
+          <label class="wide">Customer name *<input id="customer" autocomplete="name" placeholder="Customer name" required></label>
+          <label>Mobile number<input id="mobile" inputmode="tel" placeholder="Optional"></label>
+          <label>Bill date<input id="billDate" type="date"></label>
+          <label>Bill ID<input id="billId" readonly></label>
+          <label>Rate / sq.ft (₹)<input id="rate" type="number" min="0" step="0.01" value="100" inputmode="decimal"></label>
+        </div>
+        <div class="previous-box"><span>Previous pending</span><strong id="previousPending">₹0.00</strong><small id="previousHint">Enter an existing customer name to check their balance.</small></div>
+      </div>
+
+      <div class="card measurements-card">
+        <div class="card-title"><div><h2>Door measurements</h2><p>Area = length × width ÷ 144</p></div><button id="addRow" class="btn secondary small">＋ Add row</button></div>
+        <div class="measurement-head"><span>No.</span><span>Length (in)</span><span>Width (in)</span><span>Area (sq.ft)</span><span></span></div>
+        <div id="measurementRows"></div>
+      </div>
+
+      <div class="card summary-card">
+        <div class="summary-line"><span>No. of doors</span><strong id="doorCount">0</strong></div>
+        <div class="summary-line"><span>Total area</span><strong id="totalArea">0.00 sq.ft</strong></div>
+        <div class="summary-line"><span>Current bill</span><strong id="currentAmount">₹0.00</strong></div>
+        <div class="summary-line"><span>Previous pending</span><strong id="summaryPrevious">₹0.00</strong></div>
+        <div class="summary-line grand"><span>Grand total</span><strong id="grandTotal">₹0.00</strong></div>
+      </div>
+      <div class="actions"><button id="previewBtn" class="btn secondary">Preview bill image</button><button id="saveBtn" class="btn primary">Save bill</button></div>
+      <p class="hint">Saving a new bill carries the customer's previous balance into this bill, so it is not counted twice.</p>
+    </section>
+
+    <section id="view-bills" class="view" hidden>
+      <div class="section-heading"><div><h1>All bills</h1><p>Saved on this device.</p></div><button id="exportBtn" class="btn secondary small">Export Excel</button></div>
+      <input id="billSearch" class="search" placeholder="Search by bill ID or customer">
+      <div id="billList" class="record-list"></div>
+      <div class="export-row"><button id="backupBtn" class="btn secondary">Backup data</button><label class="btn secondary file-label">Restore backup<input id="restoreInput" type="file" accept="application/json" hidden></label></div>
+    </section>
+
+    <section id="view-pending" class="view" hidden>
+      <div class="section-heading"><div><h1>Pending payments</h1><p>Record payments received manually.</p></div><strong id="outstandingTotal" class="outstanding">₹0.00</strong></div>
+      <input id="pendingSearch" class="search" placeholder="Search pending bill or customer">
+      <div id="pendingList" class="record-list"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-panel">
+      <div class="modal-head"><h2 id="modalTitle">Bill image</h2><button id="closeModal" class="icon-btn" aria-label="Close">×</button></div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
